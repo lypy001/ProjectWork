@@ -1,0 +1,14 @@
+{% extends 'dashboard/sidebar.html' %}
+
+{% block content %}
+ <ul class="list-group" style="margin: 30px auto;">
+     <li class="list-group-item active">Employee's Info:</li>
+     <li class="list-group-item">Employee Name: {{ employee.get_full_name }}</li>
+     <li class="list-group-item">Employee Type: {{ employee.employeetype}}</li>
+     <li class="list-group-item">Role: {{ employee.role}}</li>
+     <li class="list-group-item">Date of Birth: {{ employee.dateOfBirth}}</li>
+     <li class="list-group-item">Age: {{ employee.get_age }}</li>
+
+     </ul>
+    <input type=button value="Back" onClick="javascript:history.go(-1);">
+{% endblock %}

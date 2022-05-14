@@ -1,0 +1,89 @@
+{% extends 'dashboard/sidebar.html' %}
+{% block title %} {{ title }} {% endblock %}
+
+{% load crispy_forms_tags %}
+
+ {% block navheader %}
+    {% include 'dashboard/navheader.html' %}
+ {% endblock %}
+
+{% block content %}
+        <section class="content">
+            <section class="container-fluid">
+            	   <section class="row">
+                        <section class="col col-sm-8 offset-sm-2">
+
+                            {% if  messages %}
+                                    {% for message in messages %}
+                                     <div {% if message.tags %} class="{{ message.tags}}"{% endif %}>
+                                         {{ message }}
+                                         <button type="button" class="close" id = "override-start"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                         </button>
+                                     </div>
+                                    {% endfor %}
+                            {% endif %}
+
+                        </section>
+                    </section>
+
+                	<!-- TABLE -->
+                	<div class="table-responsive table-shadow">
+                		<div class="text-center table-description">
+                			<h4 class="title-h3" style="color: #60a0b3 !important;
+    						text-shadow: 1px 0px rgba(0,0,0,0.11)">{{ employee.get_full_name }}</h4>
+                		</div>
+                		{% if leave_list %}
+                		<table class="table">
+							  <thead>
+							    <tr>
+							      <!-- <th scope="col">#</th> -->
+							      <th scope="col">Type</th>
+							      <th scope="col">Day(s)</th>
+							      <th scope="col">Status</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							  	{% for leave in leave_list %}
+							    <tr>
+
+							      <td>{{ leave.leavetype}}</td>
+							      <td>{{ leave.leave_days }}</td>
+							      {% if leave.is_approved %}
+							      <td style="color:green;font-weight: bold">{{ leave.status }}</td>
+							      {% else %}
+							      <td style="color:">{{ leave.status }}</td>
+							      {% endif %}
+
+							      <td>
+							      	<a href="{% url 'leave:userleavedetails' leave.id %}">
+							      	    VIEW
+							      	</a>
+
+							      </td>
+							    </tr>
+
+							    {% endfor %}
+
+							  </tbody>
+
+						</table>
+						{% else %}
+
+						<span>No Leaves can be found...</span>
+						{% endif %}
+
+					</div>
+                	<!-- /TABLE -->
+
+            </section> <!-- /container -->
+
+
+        </section>
+ {% endblock %}
+
+<script type="text/javascript">
+{% block extrajs%}
+
+
+{% endblock %}
+</script>

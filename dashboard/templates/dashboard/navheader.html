@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a, .dropbtn {
+    display: inline-block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+
+
+}
+ul.topnav li a:hover, .dropdown:hover .dropbtn {
+    background-color: #111;
+}
+
+
+ul.topnav li.dropdown {
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: relative;
+  background-color: black;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: lightblue;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+
+
+
+    <ul class="topnav">
+
+        {% if request.user.is_superuser and request.user.is_staff %}
+            <li class = "dropdown">
+                <a href="" class="dropbtn">Employee</a>
+                              <div class="dropdown-content">
+                                <a href="{% url 'dashboard:addemployee' %}">Add Employee</a>
+                                <a href="{% url 'dashboard:employees' %}">All Employees</a>
+                                <a href="{% url 'dashboard:bankaccountcreate' %}">+ Bank Account</a>
+                              </div>
+                        </li>
+                        {% endif %}
+
+        {% if request.user.is_superuser and request.user.is_staff %}
+            <li class="dropdown">
+                <a href="" class="dropbtn" >Users</a>
+                              <div class="dropdown-content">
+                                <a href="{% url 'accounts:register' %}">Create Users</a>
+
+                              </div>
+                        </li>
+                        {% endif %}
+        <li class="dropdown">
+            <a href="" class="dropbtn">Leave</a>
+                              <div class="dropdown-content">
+                                {% if request.user.is_superuser %}
+                                <a href="{% url 'leave:pendingleaveslist' %}">Pending Leaves</a>
+                                <a href="{% url 'leave:approvedleaveslist' %}">Approved Leaves</a>
+                                <a href="{% url 'leave:canceleaveslist' %}">Cancelled Leaves</a>
+                                <a href="{% url 'leave:leavesrejected' %}">Rejected Leaves</a>
+
+                                <a href="{% url 'leave:applyleave' %}">Apply for Leave</a>
+                                {% else %}
+                                <a href="{% url 'leave:applyleave' %}">Apply for Leave</a>
+
+                                <a href="{% url 'leave:staffleavetable' %}">All Leaves</a>
+                                {% endif %}
+                              </div>
+                        </li>
+        <li style="float:right" class="dropdown">
+            <a href="" class="dropbtn">
+                <p>
+                    <i class="fa fa-user"></i> {{ request.user}}
+
+                </p>
+            </a>
+            <div class="dropdown-content">
+                                {% if request.user.is_authenticated %}
+                                <a href="{% url 'accounts:logout'  %}">Logout</a>
+                                {% else %}
+                                <a href="{% url 'accounts:login'  %}">Login</a>
+                                {% endif %}
+                                <a href="{% url 'accounts:userprofile' %}">Profile</a>
+                                <a href="{% url 'accounts:changepassword' %}">Change Password</a>
+
+                              </div>
+        </li>>
+
+    </ul>
+
+
+
+
+</body>
+</html>

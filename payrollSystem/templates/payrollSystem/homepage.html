@@ -1,0 +1,122 @@
+{% extends 'dashboard/sidebar.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-8">
+            <br>
+            <h4>Employee</h4>
+                        <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Create New Employee
+            </button>
+            <br>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Create Payroll</h4>
+                        <form method="post" action='{% url "payrollSystem:create" %}' class="form">
+                            {% csrf_token %}
+                            {{ create_form }}
+                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Balance</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for person in persons %}
+                        <tr>
+
+                            <td>{{ person.name }}</td>
+                            <td>{{ person.tag_occupation }}</td>
+                            <td>{{ person.tag_balance }}</td>
+                            <td>
+                                <a href="{{ person.get_card_url }}" class="btn btn-primary">Edit </a>
+                                 <a href="{% url 'payrollSystem:person_delete'  person.id %}" class="btn btn-primary">Delete </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4">
+            <br>
+            <h4>Role</h4>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleOccup">
+                Create New Role
+            </button>
+            <br>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleOccup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Create Role</h4>
+                        <form method="post" action='{% url "payrollSystem:create_roll" %}' class="form">
+                            {% csrf_token %}
+                            {{ create_roll }}
+                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Role</th>
+                        <th>Action</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for role in roll %}
+                        <tr>
+                            <td>{{ role.id }}</td>
+                            <td>{{ role.roll }}</td>
+
+                            <td><a href="{% url 'payrollSystem:update_roll' role.id %}" class="btn btn-primary"> Edit</a> </td>
+                            <td><a href="{% url 'payrollSystem:delete_roll'  role.id %}" class="btn btn-primary">Delete </a></td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    
+{% endblock content %}
