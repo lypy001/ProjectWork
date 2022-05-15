@@ -10,7 +10,7 @@ from dashboard.models import *
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse
 
-
+#Reference from https://github.com/anaryomike/humanresource.git
 # Create your views here.
 def login_view(request):
     login_user = request.user
