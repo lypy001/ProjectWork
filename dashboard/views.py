@@ -9,7 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 app_name = 'dashboard'
 
-
+# reference from https://github.com/anaryomike/humanresource.git
 # Create your views here.
 def dashboard(request):
     dataset = dict()
